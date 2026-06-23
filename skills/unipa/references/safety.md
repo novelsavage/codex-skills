@@ -1,36 +1,37 @@
-# UNIPA safety rules
+# 安全ルール
 
-## Login
+## ログイン
 
-- Use the user's Chrome profile through `chrome:control-chrome`.
-- If ID/password fields are already filled, do not inspect the password value. Submit only when the user asked to log in to that UNIPA site.
-- If credentials are not filled, ask the user to log in or provide the next step. Do not search browser storage, cookies, localStorage, profile files, or saved passwords.
-- If CAPTCHA, MFA, or an external identity-provider approval appears, ask the user to complete or explicitly authorize that step.
+- ユーザー本人のChromeプロファイルを使う。
+- ID欄とパスワード欄が既に入力済みでも、パスワードの値は読まない。
+- ログイン送信は、ユーザーがそのUNIPAサイトへのログインを依頼している場合だけ行う。
+- 認証情報が未入力の場合は、ユーザーにログインを依頼する。ブラウザの保存パスワード、Cookie、localStorage、プロファイルファイルを探さない。
+- CAPTCHA、MFA、外部認証の承認画面が出た場合は、ユーザーに操作してもらう。
 
-## State-changing actions
+## 状態を変更する操作
 
-Confirm immediately before:
+次の操作は、実行直前に必ず確認する。
 
-- submitting an assignment/report;
-- uploading a file;
-- replacing, deleting, or withdrawing a submission;
-- answering/submitting a quiz, survey, questionnaire, application, or reservation;
-- changing registration, favorites, settings, or profile information;
-- logging out if it might interrupt the user's work.
+- 課題やレポートを提出する。
+- ファイルをアップロードする。
+- 提出物を差し替える、削除する、取り下げる。
+- テスト、アンケート、申請、予約を送信する。
+- 履修登録、お気に入り、設定、プロフィール情報を変更する。
+- 作業中の内容を失う可能性がある状態でログアウトする。
 
-Confirmation must name the site/account context, class/task if visible, file name if any, and the exact button/action.
+確認するときは、対象サイト、授業名、課題名、ファイル名、押すボタン名を具体的に示す。
 
-## Privacy
+## 個人情報と教材
 
-- Do not quote student ID, personal details, grades, private messages, or file contents unless the user needs them for the requested task.
-- Summarize notices and assignments compactly. Avoid dumping full pages.
-- Treat downloaded materials as copyrighted/private course content. Do not upload or share them elsewhere unless the user explicitly asks.
-- Do not inspect or log hidden form/session fields such as `rx-token`, `rx-loginKey`, `rx-deviceKbn`, `rx-loginType`, or `javax.faces.ViewState`. When extracting page structure, filter hidden inputs out.
+- 学籍番号、氏名、成績、私信、課題本文、教材の全文を、必要なく引用しない。
+- 掲示や課題は要点だけをまとめる。画面全体をそのまま貼り付けない。
+- 授業資料や添付ファイルは、授業内の限定コンテンツとして扱う。ユーザーが明示しない限り、外部サービスへアップロードしない。
+- `rx-token`、`rx-loginKey`、`rx-deviceKbn`、`rx-loginType`、`javax.faces.ViewState` などのhidden session値を収集しない。画面構造を調べるときも、hidden inputは除外する。
 
-## Session hygiene
+## セッションの扱い
 
-- Avoid browser Back.
-- Avoid duplicate logged-in UNIPA tabs.
-- If the portal warns about timeout, unsaved changes, lockout, maintenance, or simultaneous login, surface that warning to the user before proceeding.
-- Close or dismiss file-list/detail modals before switching courses or using top navigation. Open modals can make visible buttons appear to do nothing.
-- Keep the active UNIPA tab as `handoff` or `deliverable` after meaningful work.
+- ブラウザの戻るボタンを使わない。
+- 同じUNIPAセッションを複数タブで扱いすぎない。
+- タイムアウト、未保存変更、アカウントロック、メンテナンス、同時ログインに関する警告が出た場合は、先にユーザーへ伝える。
+- `ファイル一覧` や詳細ダイアログを開いたまま、授業切替や上部ナビゲーションを使わない。開いたダイアログは閉じてから次の操作へ進む。
+- 意味のある作業をしたUNIPAタブは、作業終了時に閉じずに引き継ぐ。
