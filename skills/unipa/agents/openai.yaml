@@ -1,0 +1,4 @@
+interface:
+  display_name: "UNIPA操作"
+  short_description: "麗澤大学UNIPAの課題・資料確認を補助"
+  default_prompt: "Use $unipa to open 麗澤大学UNIPA, confirm assignments, and find class materials safely."

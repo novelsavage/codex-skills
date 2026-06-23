@@ -1,0 +1,12 @@
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.bak
+*.disabled-*
+__pycache__/
+.venv/
+.env
+.env.*
+Codex-docs/
+Codex-scripts/
