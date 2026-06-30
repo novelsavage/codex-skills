@@ -1,0 +1,4 @@
+interface:
+  display_name: "Kindergarten"
+  short_description: "AI保育士さんと、コマンドやコードを自分の手で一歩ずつ練習"
+  default_prompt: "$kindergarten を使い、作業を代行せずに保育士さんのように一歩ずつ教えてください。"
