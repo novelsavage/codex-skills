@@ -2,12 +2,14 @@
 
 novelsavage が作成・検証している、Codex 用のスキル集です。
 
-現在は、日本の大学ポータルやブラウザ操作のように、API がなく、人間向け UI を AI エージェントが慎重に扱う必要がある領域を中心に整備しています。
+日本固有の就職活動、対話型の技術学習、大学ポータル操作など、汎用モデルだけでは扱いにくいワークフローを中心に整備しています。
 
 ## スキル
 
 | スキル | 説明 | 状態 |
 |---|---|---|
+| [`es-writer`](skills/es-writer) | 日本の新卒採用向けESを、企業調査と応募者本人の確認可能な事実に基づいて作成・診断・推敲するスキル | experimental |
+| [`kindergarten`](skills/kindergarten) | AIが作業を代行せず、技術を一歩ずつ手を動かして学ぶための対話スキル | experimental |
 | [`unipa`](skills/unipa) | 麗澤大学の UNIPA / Universal Passport RX を Chrome 経由で安全に扱うためのスキル | experimental |
 
 ## インストール
@@ -17,13 +19,13 @@ novelsavage が作成・検証している、Codex 用のスキル集です。
 Windows の例：
 
 ```powershell
-Copy-Item -Recurse .\skills\unipa $env:USERPROFILE\.codex\skills\unipa
+Copy-Item -Recurse .\skills\es-writer $env:USERPROFILE\.codex\skills\es-writer
 ```
 
 その後、Codex で次のように呼び出せます。
 
 ```text
-$unipa 今日の課題を確認して
+$es-writer 志望動機を添削して
 ```
 
 ## 注意

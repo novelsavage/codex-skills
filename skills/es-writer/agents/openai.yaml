@@ -1,0 +1,4 @@
+interface:
+  display_name: "ES Writer"
+  short_description: "日本の新卒ESを根拠ある事実から作成・診断・推敲する"
+  default_prompt: "$es-writer を使い、企業と設問を調べたうえで、事実に基づく新卒ESを作成または添削してください。"
