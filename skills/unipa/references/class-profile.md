@@ -1,61 +1,65 @@
-# クラスプロファイル
+# UNIPA class profile
 
-この参照は、`クラスプロファイル` またはWeb Learning系の授業ページを扱うときに読む。
+Use this reference inside a `クラスプロファイル` / Web Learning course page.
 
-## 画面構造
+## Observed structure
 
-- ヘッダー付近に授業コードと授業名が表示される。例として、`EEI3000102ソフトウェア開発の実際 -2` のような表示がある。
-- 上部には、`TOP`、`課題提出`、`テスト`、`クリッカー`、`授業Ｑ＆Ａ登録`、`ＷｅｂＮｏｔｅ`、`プロジェクト`、`コース学習`、`学習状況`、`授業資料`、`アンケート回答`、`授業評価回答` が並ぶ。
-- 左側には履修授業の一覧がある。授業リンクはAJAXで現在の授業を切り替えるため、URLがほとんど変わらないことがある。
-- 中央の `TOP` には、`課題提出 Task submission 残り1／1件` や `授業資料 Class material` のようなカードが表示される。
-- URLは状態判定に使いすぎない。観察した範囲では、クラスプロファイル、課題、授業資料の画面が似たURLや同じページタイトルで表示される。
+- The course page header shows a course code and course name, for example `EEI3000102ソフトウェア開発の実際 -2`.
+- The top area has navigation buttons such as `TOP`, `課題提出`, `テスト`, `クリッカー`, `授業Ｑ＆Ａ登録`, `ＷｅｂＮｏｔｅ`, `プロジェクト`, `コース学習`, `学習状況`, `授業資料`, `アンケート回答`, and `授業評価回答`.
+- The left pane lists enrolled courses grouped by day/period. Course links update the active class by AJAX and keep the URL mostly unchanged.
+- The central `TOP` view has card links such as `課題提出 Task submission 残り1／1件` and `授業資料 Class material`.
+- The portal top exposes a direct `クラスプロファイル` tile. It can have accessible name `クラスプロファイルトップ画面を表示します。`, but the name is not present in every rendered state; use a screenshot fallback when needed.
+- URLs are not reliable state identifiers. Observed pages include:
+  - `bs/bsa001/Bsa00101.xhtml` while either site map or class-profile-adjacent content is visible;
+  - `jg/jga001/Jga00101.xhtml` while assignment content is visible;
+  - `jg/jga005/Jga00502.xhtml` while material content is visible;
+  - `jg/jga023/Jga02302.xhtml` while syllabus search is visible.
 
-観察したURLの例：
+These are examples of stale/mismatched URL state, not route mappings. Use the visible heading and screen code instead.
 
-- `bs/bsa001/Bsa00101.xhtml`：クラスプロファイルTOPや課題関連の画面。
-- `jg/jga001/Jga00101.xhtml`：授業資料の一覧や詳細画面。
-- `jg/jga005/Jga00502.xhtml`：ポータルトップまたはクラスプロファイル隣接の画面。
+## Robust navigation pattern
 
-## 安定しやすい移動手順
+1. Determine the active course from the visible header, not URL alone.
+2. If starting from the portal schedule, click the course row's `クラスプロファイル` button after scoping to the course block.
+3. On class-profile top, prefer central card links for `課題提出` and `授業資料`. They use `syncTransition` and are more reliable than top button pairs.
+4. Top button pairs are visible button + adjacent hidden submit. They may not navigate while a modal is open or while the page thinks a form is modified.
+5. If switching course from the left pane, first close any open `ファイル一覧`, warning, or detail modal.
+6. After every navigation, wait until the visible body contains the target label and course name.
 
-1. URLではなく、画面に表示された授業名から現在の授業を判断する。
-2. ポータルの時間割から始める場合は、対象授業の行に範囲を絞って `クラスプロファイル` を押す。
-3. クラスプロファイルTOPでは、中央カードの `課題提出` と `授業資料` を優先して使う。上部ボタンより安定しやすい。
-4. 上部ボタンは、見えているボタンと隣の非表示submitが組になっていることがある。ダイアログが開いていると動かない場合がある。
-5. 左側の授業一覧で授業を切り替える前に、`ファイル一覧`、警告、詳細ダイアログを閉じる。
-6. 移動後は、対象ラベルと授業名が本文に出たことを確認する。
+## Assignment flow
 
-## 課題提出画面
+1. Open `課題提出 Task submission ...` from the central card or use a direct assignment link from the schedule/top page.
+2. On detail pages, capture:
+   - `課題名`;
+   - `課題公開期間`;
+   - `課題提出期間`;
+   - `課題内容`;
+   - `課題提出方法`;
+   - existing `添付ファイル`;
+   - upload input status;
+   - buttons such as `確定` and `一時保存`.
+3. Use `添付資料を確認` to reveal `ファイル一覧` for templates or reference files.
+4. Do not click `確定`, `一時保存`, `提出`, or final `OK` without action-time confirmation.
+5. A submitted/ended assignment can still show `Choose File`, `削除`, `WebNoteへコピー`, and `確定`. Treat every one as state-changing even when a submission timestamp and file are already present.
 
-1. 中央カードの `課題提出 Task submission ...` を開く。時間割やポータルトップに課題リンクが出ている場合は、その直接リンクを使ってもよい。
-2. 詳細画面では、次の情報を確認する。
-   - `課題名`
-   - `課題公開期間`
-   - `課題提出期間`
-   - `課題内容`
-   - `課題提出方法`
-   - 既存の `添付ファイル`
-   - ファイル選択欄の状態
-   - `確定` と `一時保存` の有無
-3. `添付資料を確認` を押すと、テンプレートや参考ファイルを含む `ファイル一覧` が表示される場合がある。
-4. `確定`、`一時保存`、`提出`、最終確認ダイアログの `OK` は、ユーザー確認なしに押さない。
+## Class material flow
 
-## 授業資料画面
+1. Open `授業資料 Class material`.
+2. On `授業資料一覧`, rows have titles such as `第9回 授業資料`, dates, author, and `コピー`.
+3. Inspect the `未確認` column before opening a row. An unread detail may be tracked.
+4. Open the row title, not `コピー`, to read the material detail.
+5. On detail pages, capture:
+   - title;
+   - `授業実施日`;
+   - `授業資料公開期間`;
+   - `資料内容`.
+6. Click `添付資料を確認` to reveal `ファイル一覧`; this can show file names such as PDFs and ZIPs without downloading.
+7. Treat `WebNoteへコピー` and row `コピー` buttons as state-changing or at least user-content-copying actions. Confirm before pressing them.
 
-1. 中央カードの `授業資料 Class material` を開く。
-2. `授業資料一覧` では、`第9回 授業資料` のような行タイトルを開く。
-3. `コピー` は押さない。WebNoteへ内容をコピーする操作であり、状態変更に近い。
-4. 詳細画面では、次の情報を確認する。
-   - 資料タイトル
-   - `授業実施日`
-   - `授業資料公開期間`
-   - `資料内容`
-5. `添付資料を確認` を押すと `ファイル一覧` が表示される。PDFなどのファイル名を、ダウンロードせずに確認できる。
-6. `WebNoteへコピー` と一覧行の `コピー` は、ユーザー確認なしに押さない。
+## Known failure modes
 
-## 失敗しやすい場面
-
-- `サーバーとの通信中にエラーが発生しました` と表示されても、目的のファイル一覧が見えている場合がある。その場合は、エラーを報告しつつ読み取りだけ続ける。
-- `ファイル一覧` ダイアログを開いたままだと、左側の授業切替や上部ナビゲーションが動かないことがある。
-- `j_idt...` で始まるIDは画面ごとに変わる。別タスクへ持ち越して使わない。
-- 同じラベルが何度も出る。現在の授業、中央カード、一覧行、詳細画面のどこを操作しているかを確認してから押す。
+- A server communication error dialog may appear while the requested file list is still visible. Report the warning and avoid repeated clicks.
+- `ファイル一覧` modals can block left-course switching and top navigation while leaving the page text readable.
+- Generated `j_idt...` IDs shift between pages. Do not hard-code them across tasks.
+- Repeated labels are common. Scope actions to the active course, current tab/card, or latest detail section before clicking.
+- The visible file-list dialog can coexist with many hidden dialog templates. Scope to a visible dialog first, then use its `a.ui-dialog-titlebar-close` control; do not select the first global dialog.
