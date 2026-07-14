@@ -1,0 +1,4 @@
+interface:
+  display_name: "Wiki"
+  short_description: "個人LLM Wikiを参照・更新し、継続的な長期記憶として安全に活用"
+  default_prompt: "$wiki を使い、個人LLM Wikiを参照して過去の背景や決定を反映してください。"
