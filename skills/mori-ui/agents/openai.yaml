@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mori UI"
+  short_description: "題材に根ざし、AIテンプレ感を避けるUI設計・監査"
+  default_prompt: "$mori-ui を使い、このUIを題材と操作目的に根ざした非テンプレなデザインにしてください。"

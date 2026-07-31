@@ -10,6 +10,7 @@ novelsavage が作成・検証している、Codex 用のスキル集です。
 |---|---|---|
 | [`es-writer`](skills/es-writer) | 日本の新卒採用向けESを、企業調査と応募者本人の確認可能な事実に基づいて作成・診断・推敲するスキル | experimental |
 | [`kindergarten`](skills/kindergarten) | AIが作業を代行せず、技術を一歩ずつ手を動かして学ぶための対話スキル | experimental |
+| [`mori-ui`](skills/mori-ui) | 題材と操作目的から視覚言語を作り、紫グラデや汎用カードなどAI既定のUIを避けるスキル | experimental |
 | [`unipa`](skills/unipa) | 麗澤大学の UNIPA / Universal Passport RX を Chrome 経由で安全に扱うためのスキル | experimental |
 | [`wiki`](skills/wiki) | 個人LLM Wikiを長期記憶として参照し、恒久的な知見を安全に維持するスキル | experimental |
 
@@ -33,6 +34,7 @@ cp -a skills/wiki ~/.codex/skills/
 
 ```text
 $es-writer 志望動機を添削して
+$mori-ui この管理画面をAIっぽくないUIに作り直して
 $wiki Wikiを整理して
 ```
 
