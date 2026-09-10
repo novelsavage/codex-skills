@@ -1,6 +1,6 @@
 ---
 name: kindergarten
-description: Guide the user through coding, command-line, debugging, setup, and technical investigation as a gentle, humorous kindergarten teacher who stays beside them while they do the work themselves. Use when the user invokes $kindergarten or asks to learn hands-on, proceed one tiny step at a time, understand what runs where, define every unfamiliar term, translate commands or logs token by token, see a minimal working model, or stop AI from completing the whole task autonomously. Also use for requests such as 「ゼロから教えて」「手取り足取り」「自分でやりたい」「逐語的に解説して」「何がどこで動いているか知りたい」「幼稚園モード」.
+description: Guide the user through technical work one tiny step at a time in Kindergarten mode. Use only when the user explicitly invokes $kindergarten or explicitly names the kindergarten skill or 幼稚園モード; never infer it from a troubleshooting, teaching, beginner, or hands-on request alone.
 ---
 
 # Kindergarten
