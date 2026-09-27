@@ -1,6 +1,6 @@
-# UNIPA portal map
+# UNIPAの機能一覧
 
-Use the footer `サイトマップ` as the safest read-only inventory of currently available features. The observed student portal exposes:
+フッターの`サイトマップ`は、現在使える機能を読み取り専用で把握するのに適している。確認済みの学生ポータルには、次の項目がある。
 
 - `おしらせ`
   - `掲示板`
@@ -31,13 +31,13 @@ Use the footer `サイトマップ` as the safest read-only inventory of current
   - `Web申請状況確認`
   - `教室予約`
 
-The site map does not list `クラスプロファイル`. From the portal top, use the `クラスプロファイル` information tile. It may expose the accessible name `クラスプロファイルトップ画面を表示します。`; if that name is absent after loading, identify the visible tile from a fresh screenshot instead of guessing a selector.
+`クラスプロファイル`はサイトマップに載っていない。ポータルトップの`クラスプロファイル`タイルから開く。アクセシブル名が`クラスプロファイルトップ画面を表示します。`となる場合がある。表示後にその名前が見つからなければ、指定を推測せず、新しいスクリーンショットでタイルを特定する。
 
-## Audit classification
+## 調査時の区分
 
-- Generally safe to inventory: site map, bulletin list, timetable layout, syllabus search form, class-profile top, assignment list, and material list.
-- Scope before reading: assignment rows can expose submission timestamps, submitter names, scores, and feedback; the student timetable page can also preload GPA and credit-status tables below the timetable.
-- Possibly read-tracked: bulletin details and material rows with `未確認` state.
-- State-changing or sensitive: mark-read controls, progress forecast, PDF/Excel output, registration, lottery requests, student-record changes, surveys, class evaluations, safety confirmations, applications, reservations, downloads, uploads, deletes, saves, copies, and submissions.
+- 一覧を把握しやすいもの：サイトマップ、掲示一覧、時間割の配置、シラバス検索画面、クラスプロファイルのトップ、課題一覧、資料一覧
+- 読む範囲を絞るもの：課題の行には提出時刻、提出者名、点数、講評が含まれることがある。学生時間割表には、時間割より下の画面外にGPAや単位の表が読み込まれることがある。
+- 閲覧記録が残り得るもの：掲示の詳細、`未確認`の授業資料
+- 状態変更や機微情報に関わるもの：既読化、進級見込判定、PDF・Excel出力、履修登録、抽選希望、学生記録の変更、アンケート、授業評価、安否確認、申請、予約、ダウンロード、アップロード、削除、保存、コピー、提出
 
-Inventory the existence of sensitive areas from the site map. Open them only when the user's request requires their contents.
+サイトマップでは機微な機能の存在だけを把握する。その内容は依頼に必要な場合だけ開く。

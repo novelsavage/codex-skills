@@ -1,16 +1,18 @@
-# UNIPA workflows
+# UNIPAの操作手順
 
-## Open and orient
+## 開いて現在の画面を把握する
 
-1. Claim an existing UNIPA tab when available; otherwise open the user's UNIPA bookmark or known portal URL.
-2. If on the login page, use saved autofill when present and submit only if the user asked for login.
-3. Confirm login by checking that password fields disappear and portal menus appear.
-4. Identify the current context from visible menu labels, selected tabs, page title, and URL. UNIPA pages can remain titled "麗澤ポータル" even after navigation, so do not rely on title alone.
-5. If the URL and body disagree, trust visible body context over URL. Example: a page can show portal-top content while the URL remains under a class-profile path.
-6. Prefer the visible heading and bracketed screen code over URL paths. Observed examples include `学生時間割表[Kmd008]`, `課題提出[Jga005]`, `授業資料[Jga023]`, and `シラバス照会[Kmh006]`.
-7. Use the footer `サイトマップ` for a safe feature inventory. Use the header logo to return to portal top; the logo may lack an accessible name, so use a current screenshot/vision fallback when it is absent from the interactable DOM.
+1. 既存のUNIPAタブがあれば確保する。なければユーザーのブックマークか確認済みの公式URLを開く。ログインから作業終了まで、同じポータルタブを使う。
+2. ログイン済みなら先へ進む。未ログインなら表示中の画面を確認する。ポータルのID・パスワード欄と`学生・教職員はこちらからログイン`のリンクがある場合も、直接SSOへ進む場合もある。学生アカウントで学生・教職員向けの経路が表示されていればそれを使う。ポータル自身のログイン欄を使う場合にSSO画面が必ず出ると考えない。
+3. 該当するログイン画面で、必要ならユーザー名欄にフォーカスを当て、Chromeの保存済み自動入力を促す。IDとパスワードが埋まれば、パスワードを読まずに送信する。空欄が残ればユーザーにブラウザー上で入力してもらう。
+4. SSOで`麗澤ワンタイムパスワード`を求められたら、[safety.md](safety.md)に従う。許可されたGmailコネクタで最新かつ有効なメールを読み、コードを入力して送信する。古いコードを使わず、毎回多要素認証が出るとも決めつけない。
+5. 認証欄が消え、ポータルのメニューが表示されたことを確かめる。ログイン・送信ボタンが無効になっただけでは処理中の可能性がある。次の画面かエラーを確認してから進む。
+6. 表示中のメニュー、選択されたタブ、見出し、URLから現在の画面を把握する。画面が移ってもタイトルが「麗澤ポータル」のままの場合がある。
+7. URLと本文が食い違うときは、表示中の本文を優先する。クラスプロファイルのURLのままポータルトップが見えることもある。
+8. アドレスバーより、`学生時間割表[Kmd008]`、`課題提出[Jga005]`、`授業資料[Jga023]`、`シラバス照会[Kmh006]`などの見出しと画面コードを優先する。
+9. 機能一覧を安全に把握するときはフッターの`サイトマップ`を使う。ヘッダーのロゴでポータルトップへ戻れる。ロゴにアクセシブルな名前がないときは、新しいスクリーンショットで場所を確かめて操作する。
 
-Common top-level areas include:
+主な上位機能は次のとおり。
 
 - おしらせ
 - 時間割
@@ -21,65 +23,65 @@ Common top-level areas include:
 - 申請&予約
 - クラスプロファイル
 
-## Download class materials
+## 授業資料をダウンロードする
 
-1. Start from today's schedule, a named class, or the requested class profile.
-2. Open the relevant `クラスプロファイル` or class page from the schedule/list.
-3. For class-profile pages, read [class-profile.md](class-profile.md) and prefer the central `授業資料 Class material` card or the list link over brittle top buttons.
-4. On `授業資料一覧`, rows usually have titles like `第9回 授業資料`; open the row title to reach the detail page.
-5. On the detail page, click `添付資料を確認` to reveal `ファイル一覧`; this reveals filenames without necessarily downloading them.
-6. Use the browser download event when clicking the actual file button/link if the user asked to download.
-7. After download, report file name, source class/page, and download location.
-8. If multiple similarly named materials exist, ask the user which one before downloading all.
+1. 今日の時間割、指定された授業、またはクラスプロファイルから始める。
+2. 時間割・一覧から該当する`クラスプロファイル`または授業ページを開く。
+3. クラスプロファイルでは[class-profile.md](class-profile.md)を読み、反応しにくい上部ボタンより、中央の`授業資料 Class material`カードや一覧へのリンクを優先する。
+4. `授業資料一覧`で`第9回 授業資料`のような行のタイトルを開き、詳細へ進む。
+5. 詳細の`添付資料を確認`を押すと`ファイル一覧`が開く。ファイル名の確認だけならダウンロードは不要な場合がある。
+6. ダウンロードを依頼された場合は、実際のファイルボタン・リンクを押す前にブラウザーのダウンロードイベントを待ち受ける。
+7. ファイル名、科目と取得元の画面、保存先を報告する。
+8. 似た名前の資料が複数あれば、一括取得する前に対象を確認する。
 
-## Check assignments
+## 課題を確認する
 
-1. Navigate through the class schedule, `クラスプロファイル`, or assignment/task area.
-2. Look for Japanese labels such as `課題`, `レポート`, `提出`, `期限`, `登録`, `未提出`, `提出済`.
-3. Capture only task-relevant facts:
-   - class name;
-   - assignment title;
-   - due date/time;
-   - submission state;
-   - required file format or instructions;
-   - visible attachments.
-4. If instructions are long, summarize and offer to extract exact requirements.
-5. On assignment detail pages, `添付資料を確認` can reveal `ファイル一覧`; use it to identify required templates without pressing `確定` or `一時保存`.
+1. 授業の時間割、`クラスプロファイル`、課題一覧から該当箇所へ進む。
+2. `課題`、`レポート`、`提出`、`期限`、`登録`、`未提出`、`提出済`などを探す。
+3. 依頼に関係する項目だけを確認する。
+   - 科目名
+   - 課題名
+   - 締切日時
+   - 提出状態
+   - 指定ファイル形式や指示
+   - 表示されている添付ファイル
+4. 指示が長い場合は要約し、必要なら正確な要件を抜き出す。
+5. 課題詳細の`添付資料を確認`から`ファイル一覧`を開けることがある。`確定`や`一時保存`を押さずにテンプレートを確認する。
 
-## Submit an assignment
+## 課題を提出する
 
-1. Read `safety.md` before starting.
-2. Verify the class name and assignment title from the visible page.
-3. Verify the file path exists locally if uploading a file.
-4. Attach the file using the visible upload control.
-5. Stop before the final `提出`, `登録`, `確定`, `送信`, or equivalent button.
-6. Ask the user to confirm the exact final action, class/task, and file name.
-7. After confirmation, submit and verify the success state from a confirmation message, status text, or `提出済` indicator.
+1. 作業前に[safety.md](safety.md)を読む。
+2. 表示中の科目名と課題名を確認する。
+3. アップロードするファイルがローカルに存在することを確かめる。
+4. 表示中のアップロード欄でファイルを添付する。
+5. 最終の`提出`、`登録`、`確定`、`送信`などを押す前に止まる。
+6. 科目、課題、ファイル名、最終操作を示してユーザーに確認する。
+7. 確認後に送信し、完了メッセージや`提出済`などで結果を確かめる。
 
-## Notices and schedules
+## 掲示と時間割
 
-- For notices, inspect the list first. It supports category grouping and filters such as `既読`, `未読`, `新着`, `重要`, `申込`, and `フラグつき`, plus explicit mark-read controls. Open a detail only when the requested notice requires it.
-- For schedules, use the date controls inside UNIPA instead of the browser Back button. Report day, period, class name, instructor, room, and visible links such as class profile or syllabus.
-- `学生時間割表` also contains PDF/Excel output, progress-forecast, GPA, and credit-status areas. Treat only the timetable panel as schedule context unless the user asks for the other data.
+- 掲示は先に一覧を見る。`既読`、`未読`、`新着`、`重要`、`申込`、`フラグつき`などの区分と、既読化の操作がある。依頼された掲示の内容を読む必要があるときだけ詳細を開く。
+- 時間割はブラウザーの「戻る」ではなく、UNIPA内の日付ボタンで移動する。日付、時限、科目、教員、教室、クラスプロファイルやシラバスへのリンクを報告する。
+- `学生時間割表`にはPDF・Excel出力、進級見込判定、GPA、単位修得状況もある。依頼がなければ時間割部分だけを見る。
 
-## Broad portal audit
+## 広範囲のポータル調査
 
-1. Read [browser-operations.md](browser-operations.md) and [safety.md](safety.md).
-2. Open the footer `サイトマップ`; inventory top-level menus and current counts before opening details.
-3. Traverse only the safely readable areas requested or needed to understand the site map.
-4. For course-related areas, sample one active course end to end, then compare list-level structure across other courses without opening every repeated record.
-5. Record the route and authoritative state signal for each area; do not rely on URL alone.
-6. Report coverage in four groups: inspected, skipped because reading may have side effects, blocked, and uncertain.
+1. [browser-operations.md](browser-operations.md)と[safety.md](safety.md)を読む。
+2. フッターの`サイトマップ`で上位機能と表示中の件数を把握し、詳細はまだ開かない。
+3. 依頼の理解に必要で、安全に読める場所だけを調べる。
+4. 授業関連の画面では、まず履修中の1科目を通して確認し、残りは一覧で構造を比べる。繰り返し同じ詳細をすべて開かない。
+5. 各機能への到達経路と、その画面を示す確かな表示を記録する。URLだけに頼らない。
+6. 確認済み、安全上省略、認証・セッション・UIで進めず、未確定の四つに分けて報告する。
 
-Do not interpret "徹底的" as permission to mark notices read, reveal grades, download every file, answer forms, or mutate portal state.
+「徹底的」という依頼だけで、掲示を既読にしたり、成績を開いたり、全資料を取得したり、フォームに回答したり、状態を変更したりしない。
 
-## Failure recovery
+## 操作がうまくいかないとき
 
-- If the page turns blank after login or navigation, wait briefly and check for visible menu text before retrying.
-- If a click appears to do nothing, take a fresh DOM snapshot/screenshot and verify whether a modal, hidden frame, or scroll position changed.
-- If top class-profile buttons do nothing, close visible modals and use the central card links or left course list instead.
-- If a server communication error dialog appears but the requested content is visible, record the warning and continue read-only; do not repeatedly click the same control.
-- If the session expires and the user has already asked for a UNIPA task, clicking the visible `ログイン` button and then `学生・教職員はこちらからログイン` may restore the SSO session without inspecting credentials. Stop if an ID/password, MFA, or approval prompt requires user input.
-- If UNIPA warns about multiple sessions, stop and ask the user which tab/session to keep.
-- If Chrome reports that the only UNIPA tab belongs to another browser session, do not create a duplicate. Ask the user to release or reopen one clean tab, then continue from a fresh snapshot.
-- If the DOM snapshot is dominated by select options or unexpectedly includes unrelated personal data, stop broad extraction and switch to a viewport screenshot plus a scoped locator/evaluate read.
+- ログイン後や画面遷移後に白紙になったら、少し待ってメニューなどが表示されるか確認する。
+- クリックしても動かない場合は、新しいDOMスナップショットかスクリーンショットでダイアログ、フレーム、スクロール位置の変化を確認する。
+- クラスプロファイル上部のボタンが反応しなければ、開いているダイアログを閉じ、中央のカードリンクか左側の科目一覧を使う。
+- サーバー通信エラーが出ても必要な内容が表示されている場合は、警告を記録して読み取りを続ける。同じボタンを繰り返し押さない。
+- セッション切れ後、ユーザーからUNIPAの作業を依頼されていれば、表示中のログイン経路と上記の手順を使う。保存済み自動入力が提示されれば使えるが、多要素認証コードは今回のログインで発行されたものに限る。必要な認証情報や承認を許可された手段で完了できない場合は止まる。
+- 複数セッションの警告が出たら止まり、残すタブやセッションをユーザーに確認する。
+- 唯一のUNIPAタブが別のCodexブラウザーセッションに確保されている場合、重複タブを作らない。以前のタスクを終了・解放するか、正常なタブを開き直してもらう。
+- DOMスナップショットが`<option>`ばかり、または無関係な個人情報を含む場合は、広い抽出を止める。表示範囲のスクリーンショットで対象を特定し、その部分だけを読む。

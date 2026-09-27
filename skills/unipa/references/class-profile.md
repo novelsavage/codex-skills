@@ -1,65 +1,61 @@
-# UNIPA class profile
+# UNIPAのクラスプロファイル
 
-Use this reference inside a `クラスプロファイル` / Web Learning course page.
+`クラスプロファイル`／Web Learningの科目ページ内で参照する。
 
-## Observed structure
+## 確認済みの構造
 
-- The course page header shows a course code and course name, for example `EEI3000102ソフトウェア開発の実際 -2`.
-- The top area has navigation buttons such as `TOP`, `課題提出`, `テスト`, `クリッカー`, `授業Ｑ＆Ａ登録`, `ＷｅｂＮｏｔｅ`, `プロジェクト`, `コース学習`, `学習状況`, `授業資料`, `アンケート回答`, and `授業評価回答`.
-- The left pane lists enrolled courses grouped by day/period. Course links update the active class by AJAX and keep the URL mostly unchanged.
-- The central `TOP` view has card links such as `課題提出 Task submission 残り1／1件` and `授業資料 Class material`.
-- The portal top exposes a direct `クラスプロファイル` tile. It can have accessible name `クラスプロファイルトップ画面を表示します。`, but the name is not present in every rendered state; use a screenshot fallback when needed.
-- URLs are not reliable state identifiers. Observed pages include:
-  - `bs/bsa001/Bsa00101.xhtml` while either site map or class-profile-adjacent content is visible;
-  - `jg/jga001/Jga00101.xhtml` while assignment content is visible;
-  - `jg/jga005/Jga00502.xhtml` while material content is visible;
-  - `jg/jga023/Jga02302.xhtml` while syllabus search is visible.
+- 科目ページの上部に`EEI3000102ソフトウェア開発の実際 -2`のような授業コードと科目名が表示される。
+- 上部には`TOP`、`課題提出`、`テスト`、`クリッカー`、`授業Ｑ＆Ａ登録`、`ＷｅｂＮｏｔｅ`、`プロジェクト`、`コース学習`、`学習状況`、`授業資料`、`アンケート回答`、`授業評価回答`などのボタンがある。
+- 左側に履修科目が曜日・時限ごとに並ぶ。科目リンクを押すとAJAXで対象科目が変わるが、URLはほぼ変わらない。
+- 中央の`TOP`には`課題提出 Task submission 残り1／1件`、`授業資料 Class material`などのカードリンクがある。
+- ポータルトップには`クラスプロファイル`のタイルがある。アクセシブル名が`クラスプロファイルトップ画面を表示します。`となる場合があるが、常に表示されるわけではない。必要ならスクリーンショットで特定する。
+- URLが画面の状態を正しく示さない場合がある。確認された例：
+  - `bs/bsa001/Bsa00101.xhtml`のままサイトマップやクラスプロファイル付近の画面が表示される。
+  - `jg/jga001/Jga00101.xhtml`のまま課題内容が表示される。
+  - `jg/jga005/Jga00502.xhtml`のまま授業資料が表示される。
+  - `jg/jga023/Jga02302.xhtml`のままシラバス検索が表示される。
 
-These are examples of stale/mismatched URL state, not route mappings. Use the visible heading and screen code instead.
+これらはURLと表示画面が食い違う例であり、各機能の固定URLを示すものではない。表示中の見出しと画面コードを使う。
 
-## Robust navigation pattern
+## 安定した画面移動
 
-1. Determine the active course from the visible header, not URL alone.
-2. If starting from the portal schedule, click the course row's `クラスプロファイル` button after scoping to the course block.
-3. On class-profile top, prefer central card links for `課題提出` and `授業資料`. They use `syncTransition` and are more reliable than top button pairs.
-4. Top button pairs are visible button + adjacent hidden submit. They may not navigate while a modal is open or while the page thinks a form is modified.
-5. If switching course from the left pane, first close any open `ファイル一覧`, warning, or detail modal.
-6. After every navigation, wait until the visible body contains the target label and course name.
+1. URLだけでなく、表示中の上部見出しから対象科目を特定する。
+2. ポータルの時間割から始める場合は、科目のまとまりに絞って`クラスプロファイル`ボタンを押す。
+3. クラスプロファイルのトップでは、`課題提出`と`授業資料`は中央のカードリンクを優先する。`syncTransition`を使っており、上部の一組のボタンより安定している。
+4. 上部のボタンは、表示されるボタンと隣接する隠し送信ボタンの組になっている。ダイアログが開いているときや、フォームに変更があると画面が移らない場合がある。
+5. 左側で科目を切り替える前に、`ファイル一覧`、警告、詳細などのダイアログを閉じる。
+6. 移動後は、表示中の本文に目的の項目名と科目名が出るまで待つ。
 
-## Assignment flow
+## 課題の確認
 
-1. Open `課題提出 Task submission ...` from the central card or use a direct assignment link from the schedule/top page.
-2. On detail pages, capture:
-   - `課題名`;
-   - `課題公開期間`;
-   - `課題提出期間`;
-   - `課題内容`;
-   - `課題提出方法`;
-   - existing `添付ファイル`;
-   - upload input status;
-   - buttons such as `確定` and `一時保存`.
-3. Use `添付資料を確認` to reveal `ファイル一覧` for templates or reference files.
-4. Do not click `確定`, `一時保存`, `提出`, or final `OK` without action-time confirmation.
-5. A submitted/ended assignment can still show `Choose File`, `削除`, `WebNoteへコピー`, and `確定`. Treat every one as state-changing even when a submission timestamp and file are already present.
+1. 中央の`課題提出 Task submission ...`カードか、時間割・トップページの課題リンクから開く。
+2. 詳細では次を確認する。
+   - `課題名`
+   - `課題公開期間`
+   - `課題提出期間`
+   - `課題内容`
+   - `課題提出方法`
+   - 既存の`添付ファイル`
+   - アップロード欄の状態
+   - `確定`、`一時保存`などのボタン
+3. テンプレートや参考ファイルを確認するときは`添付資料を確認`から`ファイル一覧`を開く。
+4. 操作直前の確認なしに`確定`、`一時保存`、`提出`、最後の`OK`を押さない。
+5. 提出済み・受付終了の課題でも`Choose File`、`削除`、`WebNoteへコピー`、`確定`が表示される場合がある。提出時刻やファイルが既に表示されていても、これらは状態を変える操作として扱う。
 
-## Class material flow
+## 授業資料の確認
 
-1. Open `授業資料 Class material`.
-2. On `授業資料一覧`, rows have titles such as `第9回 授業資料`, dates, author, and `コピー`.
-3. Inspect the `未確認` column before opening a row. An unread detail may be tracked.
-4. Open the row title, not `コピー`, to read the material detail.
-5. On detail pages, capture:
-   - title;
-   - `授業実施日`;
-   - `授業資料公開期間`;
-   - `資料内容`.
-6. Click `添付資料を確認` to reveal `ファイル一覧`; this can show file names such as PDFs and ZIPs without downloading.
-7. Treat `WebNoteへコピー` and row `コピー` buttons as state-changing or at least user-content-copying actions. Confirm before pressing them.
+1. `授業資料 Class material`を開く。
+2. `授業資料一覧`には、`第9回 授業資料`のようなタイトル、日付、作成者、`コピー`が並ぶ。
+3. 行を開く前に`未確認`列を見る。未確認の詳細を開くと閲覧が記録される可能性がある。
+4. 詳細を読むには`コピー`ではなく行のタイトルを開く。
+5. 詳細ではタイトル、`授業実施日`、`授業資料公開期間`、`資料内容`を確認する。
+6. `添付資料を確認`から`ファイル一覧`を開くと、ダウンロードせずにPDFやZIPなどのファイル名を確認できる場合がある。
+7. `WebNoteへコピー`や行の`コピー`は状態変更、少なくともユーザーの内容を複製する操作として扱う。押す前に確認する。
 
-## Known failure modes
+## よくある失敗
 
-- A server communication error dialog may appear while the requested file list is still visible. Report the warning and avoid repeated clicks.
-- `ファイル一覧` modals can block left-course switching and top navigation while leaving the page text readable.
-- Generated `j_idt...` IDs shift between pages. Do not hard-code them across tasks.
-- Repeated labels are common. Scope actions to the active course, current tab/card, or latest detail section before clicking.
-- The visible file-list dialog can coexist with many hidden dialog templates. Scope to a visible dialog first, then use its `a.ui-dialog-titlebar-close` control; do not select the first global dialog.
+- サーバー通信エラーのダイアログが出ても、依頼されたファイル一覧が表示される場合がある。警告を伝え、同じボタンを繰り返し押さない。
+- `ファイル一覧`ダイアログが開いたままだと、ページの文字は読めても、左側での科目切り替えや上部メニューを妨げることがある。
+- 生成される`j_idt...`のIDは画面ごとに変わる。別の画面やタスクで固定値として使わない。
+- 同名の項目が多い。クリック前に対象科目、利用中のタブ・カード、最新の詳細欄に範囲を絞る。
+- 表示中の`ファイル一覧`ダイアログと、隠れた複数のダイアログ雛形が共存することがある。最初に見つかったダイアログを使わず、表示中のものに絞って`a.ui-dialog-titlebar-close`で閉じる。

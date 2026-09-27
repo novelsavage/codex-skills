@@ -1,42 +1,42 @@
-# UNIPA UI notes
+# UNIPAの画面に関するメモ
 
-UNIPA / Universal Passport RX is fragile and often hostile to automation. Prefer visible page state over assumptions.
+UNIPA／Universal Passport RXは画面遷移が不安定なことがある。推測より表示中の状態を優先する。
 
-## Locator strategy
+## 操作対象の特定
 
-- Prefer stable visible Japanese labels and form/button IDs copied from the current DOM snapshot.
-- Many pages use tables, old JSF/PrimeFaces-style IDs, and repeated labels. Confirm locator uniqueness before clicking.
-- Treat generated `j_idt...` IDs as volatile. They can change between class-profile subpages; copy them from the current page only.
-- Page title may stay generic, so combine title, URL, selected menu, and visible text.
-- Treat the visible page heading plus bracketed screen code as the strongest page identity. URL paths can lag by one or more feature transitions.
-- Menus can hide subitems until hover/click. Use screenshots when DOM text is confusing.
-- Filter hidden inputs out of diagnostic extracts; hidden session fields are not task context.
-- Use the current snapshot as locator ground truth. Confirm a target is unique before interaction, and refresh the snapshot after any navigation, AJAX replacement, timeout, or ambiguity.
-- Prefer one scoped DOM extraction over repeated per-element reads when inventorying a small, already identified table or panel.
-- If a snapshot contains only select options, or exposes unrelated off-screen personal panels, use a viewport screenshot and then inspect only the identified panel.
+- 表示中の安定した日本語ラベルと、現在のDOMスナップショットにあるフォーム・ボタンのIDを優先する。
+- 表、古いJSF／PrimeFaces形式のID、同名の項目が多い。クリック前に対象が一つに絞れるか確認する。
+- 生成される`j_idt...`のIDは変わり得る。クラスプロファイルの別画面などでは再利用せず、現在の画面から取り直す。
+- ページタイトルが一般的なままのことがある。タイトル、URL、選択中のメニュー、表示テキストを組み合わせて判断する。
+- 画面を特定する際は、表示中の見出しと角括弧内の画面コードを最優先する。URLは機能の切り替えに追いつかないことがある。
+- メニューの下位項目は、マウスを合わせるかクリックするまで隠れていることがある。DOMの文字が分かりにくければスクリーンショットを使う。
+- 診断用の抽出には隠し入力欄を含めない。隠しセッション値は依頼の文脈ではない。
+- 操作対象は現在のスナップショットを根拠にする。一意性を確認し、画面移動、AJAX更新、タイムアウト、対象の曖昧さがあれば更新する。
+- 特定済みの小さな表やパネルを調べるときは、要素ごとに何度も読むより、範囲を絞ったDOM抽出を一回行う。
+- スナップショットが選択肢ばかり、または無関係な画面外の個人情報を含む場合は、表示範囲のスクリーンショットを使い、特定した部分だけを読む。
 
-## Navigation cautions
+## 画面移動の注意
 
-- Do not use browser Back as a default recovery strategy.
-- Avoid opening the same portal in multiple tabs after login.
-- Expect daily maintenance windows and timeout warnings.
-- Some buttons have generic text (`登録`, `OK`, `戻る`, `閉じる`); scope to the current class/task panel before clicking.
-- URL paths are only hints. Observed pages kept stale paths across site map, student timetable, assignment, material, and syllabus screens. Never label a route solely from its path.
-- When `ファイル一覧` or another modal is open, course switching and top navigation can silently fail. Close the modal before continuing.
-- A previous Codex task can leave a claimed Chrome tab unavailable if it ends without tab finalization. Do not work around this by opening another logged-in UNIPA tab.
-- The header logo returns to portal top but may have no accessible name and may be absent from the interactable DOM snapshot. Use a fresh screenshot and visual click fallback rather than guessing a CSS chain.
+- ブラウザーの「戻る」を標準の復旧手段にしない。
+- ログイン後に同じポータルを複数タブで開かない。
+- 毎日のメンテナンス時間とセッション切れの警告に注意する。
+- `登録`、`OK`、`戻る`、`閉じる`など一般的なボタン名は、利用中の科目・課題の範囲で特定する。
+- URLは手掛かりに過ぎない。サイトマップ、学生時間割、課題、資料、シラバスの画面で古いパスが残った例がある。パスだけで画面名を決めない。
+- `ファイル一覧`などのダイアログが開いていると、科目の切り替えや上部メニューが無反応になる場合がある。先に閉じる。
+- 以前のCodexタスクがタブの利用状態を確定せずに終わると、Chromeタブを再利用できないことがある。ログイン済みタブを増やして回避しない。
+- ヘッダーのロゴからポータルトップに戻れるが、アクセシブル名がなく、操作対象のDOMに出ないことがある。CSSの指定を推測せず、新しいスクリーンショットで位置を確かめて操作する。
 
-## Japanese labels to recognize
+## 覚えておく表示名
 
-- Login: `LOGIN`, `学生・教職員はこちらからログイン`
-- Notices: `おしらせ`, `掲示`, `重要`, `期限あり`, `もっと見る`
-- Schedule: `時間割`, `日表示`, `月表示`, `前週`, `前日`, `今日`, `翌日`, `翌週`
-- Course pages: `クラスプロファイル`, `シラバス照会`, `履修授業`
-- Class profile: `TOP`, `課題提出`, `テスト`, `クリッカー`, `授業Ｑ＆Ａ登録`, `ＷｅｂＮｏｔｅ`, `プロジェクト`, `コース学習`, `学習状況`, `授業資料`
-- Assignments: `課題`, `レポート`, `提出`, `登録`, `期限`, `未提出`, `提出済`, `添付`, `添付資料を確認`, `ファイル一覧`
-- Materials: `授業資料一覧`, `授業資料`, `資料内容`, `授業資料公開期間`, `WebNoteへコピー`
-- Final actions: `提出`, `登録`, `確定`, `送信`, `完了`
+- ログイン：`LOGIN`、`学生・教職員はこちらからログイン`
+- 掲示：`おしらせ`、`掲示`、`重要`、`期限あり`、`もっと見る`
+- 時間割：`時間割`、`日表示`、`月表示`、`前週`、`前日`、`今日`、`翌日`、`翌週`
+- 科目の画面：`クラスプロファイル`、`シラバス照会`、`履修授業`
+- クラスプロファイル：`TOP`、`課題提出`、`テスト`、`クリッカー`、`授業Ｑ＆Ａ登録`、`ＷｅｂＮｏｔｅ`、`プロジェクト`、`コース学習`、`学習状況`、`授業資料`
+- 課題：`課題`、`レポート`、`提出`、`登録`、`期限`、`未提出`、`提出済`、`添付`、`添付資料を確認`、`ファイル一覧`
+- 資料：`授業資料一覧`、`授業資料`、`資料内容`、`授業資料公開期間`、`WebNoteへコピー`
+- 最終操作：`提出`、`登録`、`確定`、`送信`、`完了`
 
-## Submission buttons
+## 送信に使うボタン
 
-Treat `提出`, `登録`, `確定`, `送信`, and final `OK` dialogs as potentially state-changing. If they complete a submission or update, confirm with the user immediately before pressing them.
+`提出`、`登録`、`確定`、`送信`、最後の`OK`が付いたダイアログは、状態を変更する可能性がある。提出や更新が完了する操作なら、押す直前にユーザーへ確認する。

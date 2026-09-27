@@ -1,47 +1,48 @@
-# UNIPA safety rules
+# UNIPAの安全上のルール
 
-## Login
+## ログイン
 
-- Use the user's Chrome profile through `chrome:control-chrome`.
-- If ID/password fields are already filled, do not inspect the password value. Submit only when the user asked to log in to that UNIPA site.
-- If credentials are not filled, ask the user to log in or provide the next step. Do not search browser storage, cookies, localStorage, profile files, or saved passwords.
-- If CAPTCHA, MFA, or an external identity-provider approval appears, ask the user to complete or explicitly authorize that step.
+- 利用可能なブラウザー操作ツールで、ユーザーのChromeプロファイルを使う。ユーザーがUNIPAへのログインを依頼した場合は、画面に表示された学生・教職員向けSSOを含む通常のログイン手順を進められる。SSOが毎回出るとは限らない。
+- IDとパスワードが入力済み、または表示中の欄にフォーカスを当てた結果Chromeが自動入力した場合は、パスワードの値を調べずに送信する。ブラウザーの保存領域、Cookie、localStorage、プロファイルファイル、保存済みパスワードを探索しない。
+- 認証情報が入力されない場合は、ユーザーにブラウザー上で入力してもらう。チャットでパスワードの送付を求めない。
+- メールによる多要素認証が出ており、ユーザーが今回のログインについてGmailへのアクセスを許可している場合は、Gmailコネクタで大学から届いた最新の該当メールを探す。送信元、発行時刻、有効期限、現在のログイン操作との対応を確かめてから、表示中の入力欄へコードを入れる。コードを回答に表示・保存・引用しない。メールが見つからない場合や期限切れの場合は、必要に応じて画面にある再送ボタンを使い、新しいメールを探す。
+- コードを読むためのGmailアクセスが許可されていない、または利用できない場合は、ユーザーにブラウザー上で認証を完了してもらう。CAPTCHAや外部認証サービスの承認が必要な場合も、ユーザーへ操作を引き継ぐ。
 
-## State-changing actions
+## 状態を変更する操作
 
-Confirm immediately before:
+次の操作の直前に確認する。
 
-- submitting an assignment/report;
-- uploading a file;
-- replacing, deleting, or withdrawing a submission;
-- answering/submitting a quiz, survey, questionnaire, application, or reservation;
-- changing registration, favorites, settings, or profile information;
-- logging out if it might interrupt the user's work.
+- 課題やレポートの提出
+- ファイルのアップロード
+- 提出物の差し替え、削除、取り下げ
+- テスト、アンケート、申請、予約の回答・送信
+- 履修登録、お気に入り、設定、プロフィールの変更
+- ユーザーの作業を中断しかねないログアウト
 
-Confirmation must name the site/account context, class/task if visible, file name if any, and the exact button/action.
+確認時にはサイトとアカウントの状況、表示中の科目・課題、該当するファイル名、押すボタンと操作内容を具体的に示す。
 
-## Read actions with possible side effects
+## 閲覧でも影響があり得る操作
 
-- Opening a notice, message, questionnaire, attendance item, grade detail, or acknowledgment page can change `未読` to `既読` or record access.
-- Before opening such an item during a broad audit, inspect the surrounding UI for unread/read markers and confirmation text.
-- If the user's request clearly requires reading that exact item, opening it is within scope. Otherwise inventory its title, date, sender, and state from the list and report that the detail was skipped.
-- Do not click `確認`, `了解`, `回答`, `受講`, or similar acknowledgment controls as part of read-only browsing.
-- The bulletin list has per-item `既読にする` and group-level `すべて既読にする` controls. Never use them during an audit.
-- The class-material list has a `未確認` column. Treat an unread material detail as possibly read-tracked; inspect the list first and open the detail only when requested or already confirmed.
+- 掲示、メッセージ、アンケート、出欠項目、成績詳細、確認画面を開くと、`未読`が`既読`になったり閲覧履歴が残ったりする可能性がある。
+- 広範囲の調査で詳細を開く前に、表示中の`未読`・`既読`の印、確認操作の有無を調べる。
+- 依頼された特定の内容を読むために必要なら、その詳細を開ける。それ以外は一覧の件名、日付、送信元、状態までを記録し、詳細を開かなかったことを報告する。
+- 読み取り専用の調査で`確認`、`了解`、`回答`、`受講`などを押さない。
+- 掲示一覧には個別の`既読にする`と一括の`すべて既読にする`がある。調査中は使わない。
+- 授業資料一覧には`未確認`列がある。未確認の詳細は閲覧が記録される可能性があるため、先に一覧を調べ、依頼された資料または確認済みの資料だけを開く。
 
-## Privacy
+## プライバシー
 
-- Do not quote student ID, personal details, grades, private messages, or file contents unless the user needs them for the requested task.
-- Summarize notices and assignments compactly. Avoid dumping full pages.
-- Treat downloaded materials as copyrighted/private course content. Do not upload or share them elsewhere unless the user explicitly asks.
-- Do not inspect or log hidden form/session fields such as `rx-token`, `rx-loginKey`, `rx-deviceKbn`, `rx-loginType`, or `javax.faces.ViewState`. When extracting page structure, filter hidden inputs out.
-- Do not broadly extract a timetable, assignment grid, student record, grade page, or application page. These can expose off-screen grades, credits, submitter names, submission timestamps, scores, health data, or application content. Read only the requested panel and fields.
+- 依頼に必要でない限り、学籍番号、個人情報、成績、私的なメッセージ、ファイル本文を引用しない。
+- 掲示や課題は簡潔に要約し、ページ全体を転載しない。
+- ダウンロードした授業資料は著作物や非公開資料として扱い、明示的な依頼なく外部へアップロード・共有しない。
+- `rx-token`、`rx-loginKey`、`rx-deviceKbn`、`rx-loginType`、`javax.faces.ViewState`などの隠しフォーム値を読み取ったり記録したりしない。画面構造を調べるときも隠し入力欄を除く。
+- 時間割、課題一覧、学生記録、成績、申請を広く抽出しない。画面外の成績、単位、提出者名、提出時刻、点数、健康情報、申請内容が含まれる場合がある。依頼された部分と項目に絞る。
 
-## Session hygiene
+## セッションの扱い
 
-- Avoid browser Back.
-- Avoid duplicate logged-in UNIPA tabs.
-- If the portal warns about timeout, unsaved changes, lockout, maintenance, or simultaneous login, surface that warning to the user before proceeding.
-- Close or dismiss file-list/detail modals before switching courses or using top navigation. Open modals can make visible buttons appear to do nothing.
-- Keep the active UNIPA tab as `handoff` or `deliverable` after meaningful work.
-- Finalize the Chrome tab session as the last browser action. Leaving a claimed tab unfinalized can block a later Codex task from safely reusing it.
+- ブラウザーの「戻る」を避ける。
+- ログイン済みUNIPAタブを重複させない。
+- タイムアウト、未保存の変更、アカウントロック、メンテナンス、二重ログインの警告が出たら、先へ進む前にユーザーへ伝える。
+- 科目を切り替えたり上部メニューを使ったりする前に、ファイル一覧や詳細のダイアログを閉じる。開いたままだとボタンが反応しないことがある。
+- 意味のある作業の後は、利用中のUNIPAタブを`handoff`または`deliverable`にする。
+- Chromeタブの利用状態の確定を最後のブラウザー操作にする。確定しないと、後のCodexタスクがタブを安全に再利用できないことがある。
