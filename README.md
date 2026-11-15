@@ -10,7 +10,7 @@ novelsavage が作成・検証している、Codex 用のスキル集です。
 |---|---|---|
 | [`es-writer`](skills/es-writer) | 日本の新卒採用向けESを、企業調査と応募者本人の確認可能な事実に基づいて作成・診断・推敲するスキル | experimental |
 | [`kindergarten`](skills/kindergarten) | AIが作業を代行せず、技術を一歩ずつ手を動かして学ぶための対話スキル | experimental |
-| [`luna`](skills/luna) | GPT-6 Luna Max に作業の振り分けや独立した調査・実装を委任するスキル | experimental |
+| [`luna`](skills/luna) | Luna Max に作業の振り分けや独立した調査・実装を委任するスキル | experimental |
 | [`mori-ui`](skills/mori-ui) | 題材と操作目的から視覚言語を作り、紫グラデや汎用カードなどAI既定のUIを避けるスキル | experimental |
 | [`unipa`](skills/unipa) | 麗澤大学の UNIPA / Universal Passport RX を Chrome 経由で安全に扱うためのスキル | experimental |
 | [`wiki`](skills/wiki) | 個人LLM Wikiを長期記憶として参照し、恒久的な知見を安全に維持するスキル | experimental |
@@ -50,7 +50,7 @@ cp -a skills/luna ~/.codex/skills/
 cp -i skills/luna/agents/luna-worker.toml ~/.codex/agents/
 ```
 
-名前付きの役割を使えない環境では、スキルが起動時に `gpt-6-luna` と推論レベル `max` を指定します。Luna Max の利用可否と同時に起動できるサブエージェント数は Codex の実行環境に従います。
+使うモデルは `luna-worker.toml` の `model` と `model_reasoning_effort` で指定します。後継モデルへ切り替えるときは、サブエージェントとして利用できるモデルIDと対応する推論レベルを確認し、インストール先のこのファイルを更新します。呼び出し方は引き続き `$luna` です。名前付きの役割を使えない環境では、スキルが同じ設定を起動ツールに渡します。設定ファイルを入れていない場合は、実行環境で Luna Max を選べるか確認してから起動します。
 
 ### `wiki`の前提
 
