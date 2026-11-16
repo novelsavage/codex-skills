@@ -6,30 +6,24 @@ novelsavage が作成・検証している、Codex 用のスキル集です。
 
 ## スキル
 
-| スキル | 説明 | 状態 |
-|---|---|---|
-| [`es-writer`](skills/es-writer) | 日本の新卒採用向けESを、企業調査と応募者本人の確認可能な事実に基づいて作成・診断・推敲するスキル | experimental |
-| [`kindergarten`](skills/kindergarten) | AIが作業を代行せず、技術を一歩ずつ手を動かして学ぶための対話スキル | experimental |
-| [`luna`](skills/luna) | Luna Max に作業の振り分けや独立した調査・実装を委任するスキル | experimental |
-| [`mori-ui`](skills/mori-ui) | 題材と操作目的から視覚言語を作り、紫グラデや汎用カードなどAI既定のUIを避けるスキル | experimental |
-| [`unipa`](skills/unipa) | 麗澤大学の UNIPA / Universal Passport RX を Chrome 経由で安全に扱うためのスキル | experimental |
-| [`wiki`](skills/wiki) | 個人LLM Wikiを長期記憶として参照し、恒久的な知見を安全に維持するスキル | experimental |
+| スキル | 説明 |
+|---|---|
+| [`es-writer`](skills/es-writer) | 日本の新卒採用向けESを、企業調査と応募者本人の確認可能な事実に基づいて作成・診断・推敲するスキル |
+| [`kindergarten`](skills/kindergarten) | AIが作業を代行せず、技術を一歩ずつ手を動かして学ぶための対話スキル |
+| [`luna`](skills/luna) | Luna Max に作業の振り分けや独立した調査・実装を委任するスキル |
+| [`mori-ui`](skills/mori-ui) | 題材と操作目的から視覚言語を作り、紫グラデや汎用カードなどAI既定のUIを避けるスキル |
+| [`unipa`](skills/unipa) | 麗澤大学の UNIPA / Universal Passport RX を Chrome 経由で安全に扱うためのスキル |
+| [`wiki`](skills/wiki) | 個人LLM Wikiを長期記憶として参照し、恒久的な知見を安全に維持するスキル |
 
 ## インストール
 
-使いたいスキルフォルダを、Codex のスキルディレクトリへコピーします。
-
-Windows の例：
-
-```powershell
-Copy-Item -Recurse .\skills\es-writer $env:USERPROFILE\.codex\skills\es-writer
-```
-
-Ubuntu の例：
+Node.js 22.20 以降で [Skills CLI](https://github.com/vercel-labs/skills#install-a-skill) を使い、必要なスキルを Codex に追加します。リポジトリのクローンは不要です。
 
 ```bash
-cp -a skills/wiki ~/.codex/skills/
+npx skills add novelsavage/codex-skills --agent codex --global --skill es-writer
 ```
+
+別のスキルを入れるには `--skill` の後ろをスキル名に替えます。特定のプロジェクトだけで使う場合は、そのプロジェクトのルートで `--global` を外して実行します。
 
 その後、Codex で次のように呼び出せます。
 
@@ -42,13 +36,16 @@ $wiki Wikiを整理して
 
 ### `luna` の設定
 
-`skills/luna` を他のスキルと同じ手順でコピーします。名前付きの `luna_worker` を使う場合は、同梱のエージェント設定を Codex のエージェントディレクトリにもコピーします。
+`--skill luna` でスキルを追加します。名前付きの `luna_worker` を使う場合は、スキルに含まれる [luna-worker.toml](skills/luna/agents/luna-worker.toml) を Codex のエージェントディレクトリにもコピーします。
+
+Linux・macOS でスキルをグローバルに追加した場合の例です。
 
 ```bash
-mkdir -p ~/.codex/skills ~/.codex/agents
-cp -a skills/luna ~/.codex/skills/
-cp -i skills/luna/agents/luna-worker.toml ~/.codex/agents/
+mkdir -p ~/.codex/agents
+cp -i ~/.agents/skills/luna/agents/luna-worker.toml ~/.codex/agents/
 ```
+
+Windows では `%USERPROFILE%\.agents\skills\luna\agents\luna-worker.toml` を `%USERPROFILE%\.codex\agents\` にコピーします。
 
 使うモデルは `luna-worker.toml` の `model` と `model_reasoning_effort` で指定します。後継モデルへ切り替えるときは、サブエージェントとして利用できるモデルIDと対応する推論レベルを確認し、インストール先のこのファイルを更新します。呼び出し方は引き続き `$luna` です。名前付きの役割を使えない環境では、スキルが同じ設定を起動ツールに渡します。設定ファイルを入れていない場合は、実行環境で Luna Max を選べるか確認してから起動します。
 
