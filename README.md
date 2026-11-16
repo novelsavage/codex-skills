@@ -76,7 +76,3 @@ Wiki本体と個人情報はこのリポジトリに含まれません。スキ�
 $env:PYTHONUTF8='1'
 python "$env:USERPROFILE\.codex\skills\.system\skill-creator\scripts\quick_validate.py" ".\skills\unipa"
 ```
-
-## ライセンス
-
-MIT License
