@@ -56,7 +56,7 @@ Windows では `%USERPROFILE%\.agents\skills\luna\agents\luna-worker.toml` を `
 - `~/Projects/llm-wiki/AGENTS.md`
 - `~/Projects/llm-wiki/wiki/index.md`
 
-Wiki本体と個人情報はこのリポジトリに含まれません。スキルはWikiを読み取り、条件を満たす恒久的な知見を自動更新することがあります。運用規約と保存対象を確認してから使用してください。
+同リポジトリに `scripts/session-inject.py` や `scripts/wiki-lint.py` がある場合は、それぞれ軽量索引の取得と更新後の自動検証に利用します。Wiki本体と個人情報はこのリポジトリに含まれません。スキルはWikiを読み取り、条件を満たす恒久的な知見を自動更新することがあります。運用規約と保存対象を確認してから使用してください。
 
 ## 注意
 
